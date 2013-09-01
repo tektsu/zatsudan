@@ -1,0 +1,68 @@
+The server and clients communicate by passing lines of ASCII text. The
+first two characters of each line are a token describing the line. The
+tokens are as follows:
+
+
+
+Received by the Server:
+
+LI Login [Password]
+Log in with Login as the user name and Password as the password
+
+MV [X[+|-]x] [Y[+|-]y] [Z[+|-]z]
+Move the the coordinates specified. Not all coordinates must be
+specified; those not listed are unchanged. Coordinate change may
+be relative by specifying a + or - before the value. Example:
+
+	MV X0 Y0  -- Moves to (0,0)
+	MV X+3    -- Increases X by 3
+
+RL
+Request a room list
+
+RM Tag
+Go to room called Tag
+
+TX Text
+Text is chat text for everyone in the room
+
+T2 User Text
+Text is chat to a particular user
+
+
+
+Received by the Client:
+
+AR User
+User has entered the room
+
+CF [Saddr]
+Configuration information (usually received immediately after login)
+Tags:
+	S - File Server Address
+
+IV [Cmd]
+Previous command was invalid -- Cmd, if present, may be all or part
+of the invalid command 
+
+MV User [Xx] [Yy] [Zz]
+Move the the coordinates specified. Not all coordinates must be
+specified; those not listed are unchanged.
+
+NL
+Previous operation failed -- must log in first
+
+RL Tag Info [Tag Info] ...
+List of available rooms on the server
+
+RM Information
+Room information
+
+TX Text
+Text is from the room
+
+TF User Text
+Text is from User
+
+YO
+Client is connect; a login request from the client is expected
